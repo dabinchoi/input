@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=“UTF-8”>
+    <title>Insert title here</title>
+</head>
+
+<form action=“/inputtag” method=“post”>
+    <fieldset>
+        <legend>회원가입</legend>
+        이름 : <input type=“text” name=“name” size=“10"/><br/>
+        아이디 : <input type=“text” name=“id” size=“10”/><br/>
+        비밀번호 : <input type=“password” name=“pw” size=‘10’ /><br/>
+        성별 : <input type=“radio” name=“sex” value=“man”/>남
+        <input type=“radio” name=“sex” value=“wo”/>여<br/>
+        취미 : <input type=“checkbox” name=“hobby” value=“read”/>독서
+        <input type=“checkbox” name=“hobby” value=“cook”/>요리
+        <input type=“checkbox” name=“hobby” value=“run”/>게임
+        <input type=“checkbox” name=“hobby” value=“swim”/>코딩
+        <input type=“checkbox” name=“hobby” value=“sleep”/>취침<br/>
+
+        주언어 :<input type=“radio” name=“major” value=“java”/>자바
+        <!-- checked=“checked” : default로 체크되도록... -->
+        <input type=“radio” name=“major” value=“html/css” checked=“checked”/>Html/Css
+        <input type=“radio” name=“major” value=“c++“/>C++
+        <input type=“radio” name=“major” value=“python”/>파이썬
+
+        <select name=“protocol”>
+            <option value=“http”>http</option>
+            <!-- selected=“selected” : default로 선택된 상태이도록... -->
+            <option value=“ftp” selected=“selected”>ftp</option>
+            <option value=“smtp”>smtp</option>
+            <option value=“pop”>pop</option>
+        </select>
+    </fieldset>
+
+    <input type=“submit” value=“전송” />
+    <!-- type=“reset” : 취소 -->
+    <input type=“reset” value=“취소” />
+</form>
+</html>
