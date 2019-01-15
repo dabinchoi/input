@@ -35,7 +35,9 @@
 <body>
 <!------ Include the above in your HEAD tag ---------->
 
-<c:forEach items="${requestScope.list}" var="board">
+<%--
+<c:forEach items="${requestScope.boards}" var="board">
+--%>
 
 
 
@@ -45,10 +47,10 @@
         <div class="col-sm-12 col-sm-offset-0 toppad" >
          <div class="panel panel-default">
             <div id="article-heading">
-            <h3 class="article-subject">${board.number}</h3>
+            <h3 class="article-subject">${board.title}</h3>
             <div class="article-name">
-                <span>${board.name}</span>
-                <span>${board.regdate}</span>
+                <span>${board.user_name}</span>
+                <span>${board.reg_date}</span>
             </div>
         </div>
             <div class="panel-body">
@@ -58,13 +60,14 @@
                     <tbody>
                         <tr>
                             <td id="main-content">${board.content}</td>
+
                         </tr>
                     </tbody>
                   </table>
                   <div class="article-footer">
-                    <a href="/board/list" class="btn btn-primary">목록</a>
+                    <a href="/list" class="btn btn-primary" >목록</a>
                    <a href = "/board/modify"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">수정</button></a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">삭제</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check"  onClick="location.href='/delete?id=${board.seq}'">삭제</button>
                   </div>
                 </div>
               </div>
@@ -105,6 +108,6 @@
           </div>
         </div>
       </div>
-</c:forEach>
+<%--</c:forEach>--%>
 </body>
 </html>

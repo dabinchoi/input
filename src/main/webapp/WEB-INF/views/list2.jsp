@@ -31,20 +31,23 @@
                     <th>제목</th>
                     <th>글쓴이</th>
                     <th>등록일</th>
+                        <th>조회수</th>
                     </tr>
                     </thead>
                     <tbody>
 
 
 
-                    <tr>
-                        <c:forEach items="${requestScope.list}" var="board">
 
+                        <c:forEach items="${requestScope.boards}" var="board">
 
-                        <td class = board>${board.number}</td>
-                            <td><a href = "/board/view">${board.title}</a></td>
-                        <td>${board.name}</td>
-                            <td>${board.regdate}</td></td>
+                            <tr>
+                       < <td>${board.seq}</td>
+
+                       < <td><a href="/read?seq=${board.seq}">${board.title}</a></td>
+                        <td>${board.user_name}</td>
+                        <td>${board.reg_date}</td>
+                                <td>${board.hit}</td>
                     </tr>
                         </c:forEach>
 
@@ -72,10 +75,21 @@
                 <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="search...">
             </div>
             <button type="submit" class="btn btn-primary">검색</button>
-            <a href = "/board/write"><button type = "button" class="btn btn-write" >글쓰기</button></a>
+            <a href = "/write"><button type = "button" class="btn btn-write" >글쓰기</button></a>
 
         </form>
 
+
+
+        <ul class="pagination pull-right">
+            <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">5</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+        </ul>
     </div>
 </div>
 

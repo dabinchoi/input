@@ -29,31 +29,31 @@
                         <div class="card-body">
 
                         <div class="card-body-center">
-                            <form name="my-form" action="#" method="post">
+                            <form name="my-form" action="/write" method="post">
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label text-md-right">이름</label>
+                                    <label for="user_name" class="col-md-2 col-form-label text-md-right">이름</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="name" class="form-control" name="full-name">
+                                        <input type="text" id="user_name" class="form-control" name="user_name">
                                     </div>
                                 </div>
-                                
-                                <div class="form-group row">
-                                    <label for="present_address" class="col-md-2 col-form-label text-md-right">암호</label>
+
+                             <div class="form-group row">
+                                    <label for="user_id" class="col-md-2 col-form-label text-md-right">id</label>
                                     <div class="col-md-9">
-                                        <input type="password" id="present_address" class="form-control">
+                                        <input type="text" id="user_id" class="form-control"name = "user_id">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="email_address" class="col-md-2 col-form-label text-md-right">제목</label>
+                                    <label for="title" class="col-md-2 col-form-label text-md-right" >제목</label>
                                     <div class="col-md-9">
-                                        <input type="text" id="email_address" class="form-control" name="email-address">
+                                        <input type="text" id="title" class="form-control" name="title">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
-                                    <label for="name" class="col-md-2 col-form-label text-md-right">내용</label>
-                                    <textarea class="col-md-9" id="exampleFormControlTextarea1" rows="8"></textarea>
+                                    <label for="content" class="col-md-2 col-form-label text-md-right"name = "content">내용</label>
+                                    <textarea class="col-md-9" id="content" rows="8" name = "content"></textarea>
                                 </div>
 
 
@@ -63,9 +63,10 @@
 
                                 
                                     <div class="p-2">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="botton" class="btn btn-primary" onClick="location.href='/list2'">
                                         등록
                                         </button>
+                                          <input type="submit" class="btn btn-default" value="등록"/>
                                     </div>
                                     
                                         <div class="p-2">

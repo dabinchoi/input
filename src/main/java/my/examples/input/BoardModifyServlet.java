@@ -16,7 +16,7 @@ public class BoardModifyServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         List<Board> list = new ArrayList<>();
-        list.add(new Board("안녕","ㅇㅇㅇㅇㅇㅇㅇ", "최성헌" ,"ㅁㅇㄴㄻㅇㄴㄹ"));
+        list.add(new Board("안녕","ㅇㅇㅇㅇㅇㅇㅇ", "최성헌" ,"dㄴㅇ"));
         req.setAttribute("list",list);
 
         RequestDispatcher requestDispatcher

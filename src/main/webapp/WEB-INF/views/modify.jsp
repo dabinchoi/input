@@ -37,12 +37,12 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group row">
+                              <%--  <div class="form-group row">
                                     <label for="present_address" class="col-md-2 col-form-label text-md-right">암호</label>
                                     <div class="col-md-9">
                                         <input type="password" id="present_address" class="form-control">
                                     </div>
-                                </div>
+                                </div>--%>
 
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-2 col-form-label text-md-right">제목</label>
