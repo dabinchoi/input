@@ -3,6 +3,8 @@ package my.examples.servlet;
 import my.examples.dao.BoardDao;
 import my.examples.dao.BoardDaoImpl;
 import my.examples.dto.Board;
+import my.examples.service.BoardService;
+import my.examples.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,14 +27,23 @@ public class ReadServlet extends HttpServlet {
             // 오류 화면으로 redirect
             return;
         }
-        BoardDao boardDao = new BoardDaoImpl();
+
+
+     /*   BoardDao boardDao = new BoardDaoImpl();
         Board board = boardDao.getBoard(seq);
+        */
+
+        BoardService boardService = new BoardServiceImpl();
+        Board board = boardService.getBoard(seq);
+
+
+/*
         if(board == null){
             // 오류 화면으로 redirect
             return;
         }
 
-        boardDao.updateReadCount(seq);
+        boardDao.updateReadCount(seq);*/
 
         req.setAttribute("board", board);
 

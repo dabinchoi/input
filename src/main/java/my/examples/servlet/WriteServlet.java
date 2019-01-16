@@ -30,6 +30,7 @@ public class WriteServlet extends HttpServlet {
         String title = req.getParameter("title");
         String content = req.getParameter("content");
 
+
         BoardDao boardDao = new BoardDaoImpl();
         Board board = new Board(user_id,user_name,title,content);
         boardDao.addBoard(board);

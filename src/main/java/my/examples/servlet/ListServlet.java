@@ -3,6 +3,8 @@ package my.examples.servlet;
 import my.examples.dao.BoardDao;
 import my.examples.dao.BoardDaoImpl;
 import my.examples.dto.Board;
+import my.examples.service.BoardService;
+import my.examples.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,8 +36,15 @@ public class ListServlet extends HttpServlet {
         int start = page * SIZE -SIZE;
         int limit = SIZE;
         // 3. db에서 목록을 읽어들인다.
-        BoardDao boardDao = new BoardDaoImpl();
+
+
+       /* BoardDao boardDao = new BoardDaoImpl();
         List<Board> boards = boardDao.getBoards(start, limit);
+        */
+        BoardService boardService = new BoardServiceImpl();
+        List<Board> boards = boardService.getBoards(page);
+
+
         // 4. request에 3에서 구한값을 setAttribute로 담아서 jsp에게 전달한다.
         req.setAttribute("boards", boards);
         // 5. jsp에서는 jstl과 el로 결과를 출력한다.

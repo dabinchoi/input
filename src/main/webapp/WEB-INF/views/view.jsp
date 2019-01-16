@@ -66,8 +66,8 @@
                   </table>
                   <div class="article-footer">
                     <a href="/list" class="btn btn-primary" >목록</a>
-                   <a href = "/board/modify"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check">수정</button></a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check"  onClick="location.href='/delete?id=${board.seq}'">삭제</button>
+                   <a href = "/modify?seq=${board.seq}"> <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#check" onClick="location.href='/modify?seq=${board.seq}'">수정</button></a>
+                      <button type="button" class="btn btn-primary"  data-target="#check"  onClick="location.href='/delete?id=${board.seq}'">삭제</button>
                   </div>
                 </div>
               </div>

@@ -14,6 +14,8 @@ public interface BoardDao {
     void deleteBoard(int seq);
 
     void updateReadCount(int  seq);
+
+    void modifyCount(int seq,String title,String content);
     }
 
 

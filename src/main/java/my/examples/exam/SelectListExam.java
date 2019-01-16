@@ -26,6 +26,7 @@ public class SelectListExam {
         List<Board> boards = boardDao.getBoards(0, 3);
         for(Board board : boards){
             System.out.println(board.toString());
+            //System.out.println(board);
         }
     }
 }

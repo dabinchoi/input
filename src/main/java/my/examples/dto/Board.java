@@ -30,7 +30,14 @@ public class Board {
         this.del_yn = del_yn;
     }*/
 
+  public Board(){
+      this.reg_date = new Date();
+      this.hit = 0;
+  }
+
 public Board(String user_id,String user_name,String title,String content){
+
+this();
     this.user_id = user_id;
     this.user_name=user_name;
     this.title= title;
@@ -71,11 +78,11 @@ public Board(String user_id,String user_name,String title,String content){
         this.seq = seq;
     }
 
-    public String getUesr_id() {
+    public String getUser_id() {
         return user_id;
     }
 
-    public void setUesr_id(String uesr_id) {
+    public void setUser_id(String uesr_id) {
         this. user_id = uesr_id;
     }
 

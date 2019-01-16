@@ -78,9 +78,6 @@
             <a href = "/write"><button type = "button" class="btn btn-write" >글쓰기</button></a>
 
         </form>
-
-
-
         <ul class="pagination pull-right">
             <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
             <li class="active"><a href="#">1</a></li>
