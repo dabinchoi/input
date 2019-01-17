@@ -26,15 +26,12 @@ public class ListServlet extends HttpServlet {
 
 
 
-
-
-
         try{
             page = Integer.parseInt(pageStr);
         }catch(Exception ignore){}
         // 2. 1페이지란 0부터 시작하여 3건을 의미한다.
-        int start = page * SIZE -SIZE;
-        int limit = SIZE;
+       /* int start = page * SIZE -SIZE;
+        int limit = SIZE;*/
         // 3. db에서 목록을 읽어들인다.
 
 

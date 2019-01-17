@@ -10,6 +10,14 @@ public interface BoardService {
     // 글을 읽어온다.(글읽기 + 조회수 증가)
     // 글을 삭제
     public List<Board> getBoards(int page);
+
     public Board getBoard(int seq);
+
+
+
     public void deleteBoard(int seq);
+
+    public void addBoard(Board board);
+   public  int modifyCount(int seq,String title, String content);
+
 }

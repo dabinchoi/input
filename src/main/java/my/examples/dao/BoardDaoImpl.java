@@ -16,87 +16,95 @@ public class BoardDaoImpl implements BoardDao {
     @Override
     public Board getBoard(Integer idParam) {
         Board board = null; // return할 타입을 선언한다.
-
+/*
         Connection conn = null;
-
         PreparedStatement ps = null;
+        ResultSet rs = null;*/
 
-        ResultSet rs = null;
-
-
+        Connection conn = ConnectionContextHolder.getConnection();
         try {
-            // a. DB 연결 - Connection
-            //    DB연결을 하려면 필요한 정보가 있다. Driver classname, DB URL, DB UserId , DB User Password
+            try (PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.SELECT_BY_ID);) {
+                // a. DB 연결 - Connection
+                //    DB연결을 하려면 필요한 정보가 있다. Driver classname, DB URL, DB UserId , DB User Password
+                ps.setInt(1, idParam);
 
 
 
-            /*  conn = DBUtil.getInstance().getConnection();*/
+               /* ps.setString(2, );*/
 
-            conn = ConnectionContextHolder.getConnection();
+                /*  conn = DBUtil.getInstance().getConnection();*/
 
-
-            // b. SELECT SQL 준비 - Connection
-            //  String sql = "select seq,id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn from board LEFT JOIN user.id=board.user_id where user_id =?";
-            //  String sql = "select seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn,user_id where user_id =?";
-            //  String sql = "select seq,user_id,user_name,title,content,reg_date,hit where user_id =?";
+                /*conn = ConnectionContextHolder.getConnection();*/
 
 
-            //    String sql = "SELECT id, title, content, name, regdate, read_count FROM board ORDER BY id DESC LIMIT ?, ?";
-
-            String sql = "SELECT seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn FROM board where seq = ?";
-
-            //  System.out.println(sql);
-            // String sql = "select seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn from board where id = ? ";
+                // b. SELECT SQL 준비 - Connection
+                //  String sql = "select seq,id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn from board LEFT JOIN user.id=board.user_id where user_id =?";
+                //  String sql = "select seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn,user_id where user_id =?";
+                //  String sql = "select seq,user_id,user_name,title,content,reg_date,hit where user_id =?";
 
 
-            ps = conn.prepareStatement(sql);
-            // c. 바인딩 - PreparedStatement
-            ps.setInt(1, idParam); // 첫번째 물음표에 5를 바인딩한다.
+                //    String sql = "SELECT id, title, content, name, regdate, read_count FROM board ORDER BY id DESC LIMIT ?, ?";
 
-            // d. SQL 실행 - PreparedStatement
-            rs = ps.executeQuery(); // SELECT 문장을 실행, executeUpdate() - insert, update, delete
+                //  String sql = "SELECT seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn FROM board where seq = ?";
 
-            // e. 1건의 row를 읽어온다. row는 여러개의 컬럼으로 구성되어 있다. - ResultSet
-            // f. e에서 읽어오지 못하는 경우도 있다.
-            if (rs.next()) {
-                int seq = rs.getInt(1);
-                String user_id = rs.getString(2);
-                String user_name = rs.getString(3);
-                String title = rs.getString(4);
-                String content = rs.getString(5);
-                //   int pr_no = rs.getInt(6);
-                // int re_depth = rs.getInt(7);
-                //int re_ord = rs.getInt(8);
-                Date reg_date = rs.getDate(6);
-                int hit = rs.getInt(7);
-                // String del_yn = rs.getString(11);
+                //  System.out.println(sql);
+                // String sql = "select seq,user_id,user_name,title,content,pr_no,re_depth,re_ord,reg_date,hit,del_yn from board where id = ? ";
 
 
-                board = new Board(seq, user_id, title, content, user_name, reg_date, hit);
+                //   ps = conn.prepareStatement(sql);
+                // c. 바인딩 - PreparedStatement
+            /*    ps.setInt(1, idParam); */// 첫번째 물음표에 5를 바인딩한다.
 
+                // d. SQL 실행 - PreparedStatement
+                /* rs = ps.executeQuery(); */// SELECT 문장을 실행, executeUpdate() - insert, update, delete
+                try (ResultSet rs = ps.executeQuery();) {
+                    // e. 1건의 row를 읽어온다. row는 여러개의 컬럼으로 구성되어 있다. - ResultSet
+                    // f. e에서 읽어오지 못하는 경우도 있다.
+                    if (rs.next()) {
+                        int seq = rs.getInt(1);
+                        String user_id = rs.getString(2);
+                        String user_name = rs.getString(3);
+                        String title = rs.getString(4);
+                        String content = rs.getString(5);
+                        Date reg_date = rs.getDate(6);
+                        int hit = rs.getInt(7);
+
+
+
+                        board = new Board(seq, user_id, title, content, user_name, reg_date, hit);
+                    }
+                }
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            // g. ResultSet, PreparedStatement, Connection 순으로 close를 한다.
-            DBUtil.close(rs, ps);
+
         }
 
         return board;
     }
 
+
     @Override
     public List<Board> getBoards(int start, int limit) {
         List<Board> list = new ArrayList<>();
-        Connection conn = null;
+       /* Connection conn = null;
         PreparedStatement ps = null;
-        ResultSet rs = null;
+        ResultSet rs = null;*/
+
         try {
-            // a. DB 연결 - Connection
-            //    DB연결을 하려면 필요한 정보가 있다. Driver classname, DB URL, DB UserId , DB User Password
-            conn = DBUtil.getInstance().getConnection();
-            if (conn != null) {
+            Connection conn = ConnectionContextHolder.getConnection();
+
+            try (PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.SELECT_BY_PAGING);) {
+                // a. DB 연결 - Connection
+                //    DB연결을 하려면 필요한 정보가 있다. Driver classname, DB URL, DB UserId , DB User Password
+
+                ps.setInt(1, start);
+                ps.setInt(2, limit);
+
+                //  conn = DBUtil.getInstance().getConnection();
+                try (ResultSet rs = ps.executeQuery();) {
+
+           /*if (conn != null) {
                 System.out.println("conn ok!");
                 System.out.println(conn.getClass().getName());
             }
@@ -111,113 +119,130 @@ public class BoardDaoImpl implements BoardDao {
             rs = ps.executeQuery(); // SELECT 문장을 실행, executeUpdate() - insert, update, delete
 
             // e. 1건의 row를 읽어온다. row는 여러개의 컬럼으로 구성되어 있다. - ResultSet
-            // f. e에서 읽어오지 못하는 경우도 있다.
-            while (rs.next()) {
-                int seq = rs.getInt(1);
-                String user_id = rs.getString(2);
-                String user_name = rs.getString(3);
-                String title = rs.getString(4);
-                String content = rs.getString(5);
-                int pr_no = rs.getInt(6);
-                int re_depth = rs.getInt(7);
-                int re_ord = rs.getInt(8);
-                Date reg_date = rs.getDate(9);
-                int hit = rs.getInt(10);
-                String del_yn = rs.getString(11);
+            // f. e에서 읽어오지 못하는 경우도 있다.*/
+                    while (rs.next()) {
+                        int seq = rs.getInt(1);
+                        String user_id = rs.getString(2);
+                        String user_name = rs.getString(3);
+                        String title = rs.getString(4);
+                        String content = rs.getString(5);
+                        int pr_no = rs.getInt(6);
+                        int re_depth = rs.getInt(7);
+                        int re_ord = rs.getInt(8);
+                        Date reg_date = rs.getDate(9);
+                        int hit = rs.getInt(10);
+                        String del_yn = rs.getString(11);
 
-                Board board = new Board(seq, user_id, title, content, user_name, reg_date, hit);
-                list.add(board);
+                        Board board = new Board(seq, user_id, title, content, user_name, reg_date, hit);
+                        list.add(board);
+                    }
+                }
             }
-
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            // g. ResultSet, PreparedStatement, Connection 순으로 close를 한다.
-            DBUtil.close(rs, ps);
         }
         return list;
     }
 
     @Override
     public void addBoard(Board board) {
-        Connection conn = null;
-        PreparedStatement ps = null;
+       /* Connection conn = null;
+        PreparedStatement ps = null;*/
         try {
-            conn = DBUtil.getInstance().getConnection();
+            Connection conn = ConnectionContextHolder.getConnection();
+
+            /*conn = DBUtil.getInstance().getConnection();
             //  String sql = "INSERT INTO board(seq,title, user_name, content,reg_date) VALUES(?, ?, ?)";
             String sql = "INSERT INTO board(user_id,user_name,title,content) VALUES (?,?,?,?)";
+*/
+                try (PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.INSERT);) {
+
+                    /*   ps = conn.prepareStatement(sql);*/
 
 
-            ps = conn.prepareStatement(sql);
+                    ps.setString(1, board.getUser_id());
+                    ps.setString(2, board.getUser_name());
+                    ps.setString(3, board.getTitle());
+                    ps.setString(4, board.getContent());
 
-
-            ps.setString(1, board.getUser_id());
-            ps.setString(2, board.getUser_name());
-            ps.setString(3, board.getTitle());
-            ps.setString(4, board.getContent());
-
-            ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
+                    ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }/* finally {
             DBUtil.close(ps);
+        }*/
         }
-    }
 
     @Override
     public void deleteBoard(int seq) {
-        Connection conn = null;
-        PreparedStatement ps = null;
+      /*  Connection conn = null;
+        PreparedStatement ps = null;*/
         try {
-            conn = DBUtil.getInstance().getConnection();
+            /*conn = DBUtil.getInstance().getConnection();
             String sql = "DELETE FROM board WHERE seq = ?";
             ps = conn.prepareStatement(sql);
             ps.setLong(1, seq);
-            ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+            ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.*/
+            Connection conn = ConnectionContextHolder.getConnection();
+            try (PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.DELETE);) {
+
+                ps.setInt(1, seq);
+                ps.executeUpdate();
+            }
+
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
-            DBUtil.close(ps);
         }
     }
 
 
     @Override
     public void updateReadCount(int seq) {
-        Connection conn = null;
-        PreparedStatement ps = null;
+       /* Connection conn = null;
+        PreparedStatement ps = null;*/
         try {
-            conn = DBUtil.getInstance().getConnection();
+
+            Connection conn = ConnectionContextHolder.getConnection();
+
+            try(PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.UPDATE);) {
+          /*  conn = DBUtil.getInstance().getConnection();
             String sql = "UPDATE board SET hit = hit + 1 WHERE seq = ?";
-            ps = conn.prepareStatement(sql);
-            ps.setLong(1, seq);
-            ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+            ps = conn.prepareStatement(sql);*/
+                ps.setLong(1, seq);
+                ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
+        } /*finally {
             DBUtil.close(ps);
-        }
+        }*/
     }
 
     @Override
     public void modifyCount(int seq, String title, String content) {
         Connection conn = null;
         PreparedStatement ps = null;
-        try {
-            conn = DBUtil.getInstance().getConnection();
-            String sql = "UPDATE board SET title=?, content=? WHERE seq=?";
-            ps = conn.prepareStatement(sql);
+
+        /*int result = 0;*/
+       /* try{
+            Connection conn = ConnectionContextHolder.getConnection();*/
+        try  /* (PreparedStatement ps = conn.prepareStatement(BoardDaoSQL.MODIFY);)*/{
+
+           conn = DBUtil.getInstance().getConnection();
+           String sql = "UPDATE board SET title=?, content=? WHERE seq=?;";
+         ps = conn.prepareStatement(sql);
             ps.setString(1, title);
             ps.setString(2, content);
             ps.setInt(3, seq);
 
 
             ps.executeUpdate(); // 입력,수정,삭제 건수 가 리턴된다.
+
         } catch (Exception ex) {
             ex.printStackTrace();
-        } finally {
+        } /*finally {
             DBUtil.close(ps);
-        }
+        }*/
     }
 }

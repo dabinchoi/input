@@ -17,21 +17,18 @@ import java.io.IOException;
 
 
 @WebServlet(name = "WriteformServlet", urlPatterns = "/write")
-public class WriteServlet extends HttpServlet {
+public class WriteformServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        String email = (String)session.getAttribute("logininfo");
-        if(email == null){
+        String email = (String) session.getAttribute("logininfo");
+        if (email == null) {
             System.out.println("-_-;;;;; 로그인 부탁!!");
             resp.sendRedirect("/login");
             return;
-        }else{
+        } else {
             System.out.println("로그인 OK");
         }
-
-
-
 
         RequestDispatcher requestDispatcher =
                 req.getRequestDispatcher("/WEB-INF/views/write.jsp");
@@ -42,15 +39,12 @@ public class WriteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
         String user_id = req.getParameter("user_id");
-        String user_name = req.getParameter("user_name");
+        String user_name = req.getParameter("name");
         String title = req.getParameter("title");
         String content = req.getParameter("content");
 
-
-       /* BoardDao boardDao = new BoardDaoImpl();
-        Board board = new Board(user_id,user_name,title,content);*/
         BoardService boardService = new BoardServiceImpl();
-        Board board = new Board(user_id,user_name,title,content);
+        Board board = new Board(user_id, user_name, title, content);
         boardService.addBoard(board);
         resp.sendRedirect("/list");
     }

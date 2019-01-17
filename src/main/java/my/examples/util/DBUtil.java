@@ -14,20 +14,20 @@ public class DBUtil {
     private static DataSource ds = null;
     private static DBUtil instance = new DBUtil();
 
-    private DBUtil(){
+    private DBUtil() {
        /* String configFile = "/datasource.properties";
         HikariConfig config = new HikariConfig(configFile);*/
 
-       HikariConfig config = new HikariConfig();
-     config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        HikariConfig config = new HikariConfig();
+        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         config.setJdbcUrl("jdbc:mysql://localhost:3306/boardexam?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC");
-       config.setUsername("root");
+        config.setUsername("root");
         config.setPassword("2904");
 
         ds = new HikariDataSource(config);
     }
 
-    public static DBUtil getInstance(){
+    public static DBUtil getInstance() {
         return instance;
     }
 
@@ -54,13 +54,7 @@ public class DBUtil {
         Connection conn = null;
         try {
             conn = ds.getConnection();
-
-
-
-       //     conn.setAutoCommit(false);
-
-
-
+            conn.setAutoCommit(false);
         }catch(Exception ex){
             ex.printStackTrace(); // 로그를 남기는 코드가 있어야 한다.
             throw new RuntimeException("DB연결을 할 수 없습니다.");
@@ -68,22 +62,10 @@ public class DBUtil {
         return conn;
     }
 
-
-
-
     public static void rollback(Connection conn){
         try{ conn.rollback(); } catch(Exception ignore){}
     }
     public static void close(Connection conn){
         try{ conn.close(); } catch(Exception ignore){}
-    }
-
-    public static void close(ResultSet rs, PreparedStatement ps){
-        try{ rs.close(); } catch(Exception ignore){}
-        close(ps);
-    }
-
-    public static void close(PreparedStatement ps){
-        try{ ps.close(); } catch(Exception ignore){}
     }
 }

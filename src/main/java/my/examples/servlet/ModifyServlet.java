@@ -3,6 +3,8 @@ package my.examples.servlet;
 import my.examples.dao.BoardDao;
 import my.examples.dao.BoardDaoImpl;
 import my.examples.dto.Board;
+import my.examples.service.BoardService;
+import my.examples.service.BoardServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,6 +31,10 @@ public class ModifyServlet extends HttpServlet {
         }
         BoardDao boardDao = new BoardDaoImpl();
         Board board = boardDao.getBoard(seq);
+
+
+
+
         if (board == null) {
             // 오류 화면으로 redirect
             return;
@@ -62,7 +68,14 @@ public class ModifyServlet extends HttpServlet {
             title = req.getParameter("title");
             content = req.getParameter("content");
 
+
+
+
+          /*  seq = Integer.parseInt(idStr);*/
+         /*   BoardService boardService = new BoardServiceImpl();*/
+
             seq = Integer.parseInt(idStr);
+
         } catch (Exception ex) {
             // id가 잘못되었을 경우엔 에러페이지로 이동.
         }
